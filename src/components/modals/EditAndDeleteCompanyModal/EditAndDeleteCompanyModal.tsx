@@ -3,11 +3,40 @@ import close from '../../../assets/close.svg';
 import trash from '../../../assets/lixo.svg';
 import { useModals } from '../../../hooks/useModals';
 import { useCompanies } from '../../../hooks/useCompanies';
+import { useForm } from 'react-hook-form';
+import * as zod from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod/src/zod.js';
 
 export function EditAndDeleteCompanyModal(){
     const { closeModalAndDelete } = useModals();
-    const { handleFormEditOrDelete, formCompanyEditOrDelete, editCompany, deleteCompany } = useCompanies();
-    console.log(formCompanyEditOrDelete);
+    const { formCompanyEditOrDelete, editCompany, deleteCompany } = useCompanies();
+
+    const dataEditCompanyValidSchema = zod.object({
+        name: zod.string().min(1, "Preencha todos os campos"),
+		email: zod.string().email("Email precisa ser valido"),
+        cnpj: zod.string().refine((value)=>{
+            const cnpjPattern = /^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/;
+            return cnpjPattern.test(value);
+        },
+        'deve passar o formato: XX.XXX.XXX/XXXX-XX')
+	});
+		
+    type IDataEditCompanyValidSchema = zod.infer<typeof  dataEditCompanyValidSchema>
+
+    const { register, handleSubmit, formState: { errors } } = useForm<IDataEditCompanyValidSchema>({
+        resolver: zodResolver(dataEditCompanyValidSchema),
+        defaultValues: {
+            name: formCompanyEditOrDelete.name,
+            cnpj: formCompanyEditOrDelete.cnpj,
+            email: formCompanyEditOrDelete.email,
+        }       
+    });
+
+
+    function handleSuccess(data: IDataEditCompanyValidSchema){
+        editCompany(formCompanyEditOrDelete.id, data);
+        closeModalAndDelete();
+    }
 
     return (<>
     <div className={styles.modal}>
@@ -23,30 +52,45 @@ export function EditAndDeleteCompanyModal(){
         <div className={styles.inputs}>
             <div className={styles.input}>
                 <label>Nome</label>
-                <input type="text" name="" id="" 
+                <input type="text" id="" 
+                className={errors.name?.message ? styles['error-input']: ''}
                     defaultValue={formCompanyEditOrDelete.name}
-                    onChange={(e)=>{
-                        handleFormEditOrDelete(e.target.value, 'name');
-                    }}
+                    {...register('name')}
                 />
+                {
+                    errors.name &&   
+                    <div className={styles.errorMessage}>
+                        {errors.name.message}
+                    </div>
+                }
             </div>
             <div className={styles.input}>
                 <label>CNPJ</label>
-                <input type="text" name="" id=""
+                <input type="text" id=""
+                    className={errors.cnpj?.message ? styles['error-input']: ''}
                     defaultValue={formCompanyEditOrDelete.cnpj}
-                    onChange={(e)=>{
-                        handleFormEditOrDelete(e.target.value, 'cnpj');
-                    }}
+                    {...register('cnpj')}
                 />
+                {
+                    errors.cnpj &&   
+                    <div className={styles.errorMessage}>
+                        {errors.cnpj.message}
+                    </div>
+                }
             </div>
             <div className={styles.input}>
                 <label>E-mail</label>
-                <input type="text" name="" id="" 
+                <input type="text" id="" 
+                    className={errors.email?.message ? styles['error-input']: ''}
                     defaultValue={formCompanyEditOrDelete.email}
-                    onChange={(e)=>{
-                        handleFormEditOrDelete(e.target.value, 'email');
-                    }}
+                    {...register('email')}
                 />
+                {
+                    errors.email &&   
+                    <div className={styles.errorMessage}>
+                        {errors.email.message}
+                    </div>
+                }
             </div>
         </div>
 
@@ -64,15 +108,7 @@ export function EditAndDeleteCompanyModal(){
                         }} 
                 >Cancelar</button>
                 <button className={styles.btnRegister}
-                    onClick={()=>{
-                        const { name, email, cnpj, id } = formCompanyEditOrDelete;
-                        editCompany(id, {
-                            name,
-                            email,
-                            cnpj,
-                        })
-                        closeModalAndDelete();
-                    }}
+                    onClick={handleSubmit(handleSuccess)}
                 >Editar</button>
             </div>
         </div>

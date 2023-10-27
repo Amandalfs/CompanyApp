@@ -1,6 +1,7 @@
 import { useContext, useEffect } from "react";
 import { api } from "../api/api";
 import { CompanyContext } from "../contexts/CompanyContext";
+import { toast } from "react-toastify";
 
 export function useCompanies(){
     const { 
@@ -44,6 +45,7 @@ export function useCompanies(){
             email: data.email,
         })
         listCompanies();
+        toast.success('Adicionado a empresa');
     }
 
     async function editCompany(id: string, data: {
@@ -57,15 +59,13 @@ export function useCompanies(){
             email: data.email,
         })
         listCompanies();
+        toast.success('Atualizado a empresa');
     }
 
     async function deleteCompany(id: string) {
         await api.delete(`/clients/${id}`)
         listCompanies();
-    }
-
-    function handleFormEditOrDelete(value: string, key: string): void{
-        setFormCompanyEditOrDelete({...formCompanyEditOrDelete, [key]: value});
+        toast.success('Empresa removida');
     }
 
     return {
@@ -78,7 +78,6 @@ export function useCompanies(){
         setUpdateList,
         editCompany,
         deleteCompany,
-        handleFormEditOrDelete,
         formCompanyEditOrDelete,
         setFormCompanyEditOrDelete
     }
