@@ -64,10 +64,6 @@ export function useCompanies(){
         listCompanies();
     }
 
-    function handleFormEditOrDelete(value: string, key: string): void{
-        setFormCompanyEditOrDelete({...formCompanyEditOrDelete, [key]: value});
-    }
-
     return {
         companies, 
         setCompanies,
@@ -78,7 +74,6 @@ export function useCompanies(){
         setUpdateList,
         editCompany,
         deleteCompany,
-        handleFormEditOrDelete,
         formCompanyEditOrDelete,
         setFormCompanyEditOrDelete
     }

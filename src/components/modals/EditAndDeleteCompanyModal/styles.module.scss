@@ -125,3 +125,14 @@
     display: flex;
     gap: 2rem;
 }
+
+.errorMessage {
+    color: red;
+    font-size: 0.725rem;
+    padding-top: 0.5rem;
+}
+
+.error-input {
+    border: 1px solid red;
+    background-color: #ffdddd;
+}
