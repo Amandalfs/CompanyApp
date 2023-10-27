@@ -59,6 +59,7 @@ export function RegisterCompanyModal(){
                 <label>Nome</label>
                 <input type='text' id='' 
                     {...register('name')}
+                    className={errors.name?.message ? styles['error-input']: ''}
                 /> 
                 {
                     errors.name &&   
@@ -71,6 +72,7 @@ export function RegisterCompanyModal(){
                 <label>CNPJ</label>
                 <input type='text' id='' 
                     {...register('cnpj')}
+                    className={errors.cnpj?.message ? styles['error-input']: ''}
                 />
                 {
                     errors.cnpj &&   
@@ -83,6 +85,7 @@ export function RegisterCompanyModal(){
                 <label>E-mail</label>
                 <input type='text' id='' 
                     {...register('email')}
+                    className={errors.email?.message ? styles['error-input']: ''}
                 />
                 {
                     errors.email &&   

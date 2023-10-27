@@ -53,6 +53,7 @@ export function EditAndDeleteCompanyModal(){
             <div className={styles.input}>
                 <label>Nome</label>
                 <input type="text" id="" 
+                className={errors.name?.message ? styles['error-input']: ''}
                     defaultValue={formCompanyEditOrDelete.name}
                     {...register('name')}
                 />
@@ -66,6 +67,7 @@ export function EditAndDeleteCompanyModal(){
             <div className={styles.input}>
                 <label>CNPJ</label>
                 <input type="text" id=""
+                    className={errors.cnpj?.message ? styles['error-input']: ''}
                     defaultValue={formCompanyEditOrDelete.cnpj}
                     {...register('cnpj')}
                 />
@@ -79,6 +81,7 @@ export function EditAndDeleteCompanyModal(){
             <div className={styles.input}>
                 <label>E-mail</label>
                 <input type="text" id="" 
+                    className={errors.email?.message ? styles['error-input']: ''}
                     defaultValue={formCompanyEditOrDelete.email}
                     {...register('email')}
                 />

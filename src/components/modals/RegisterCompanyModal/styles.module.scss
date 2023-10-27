@@ -134,5 +134,12 @@
 
 .error-input {
     border: 1px solid red;
-    background-color: #ffdddd;
+
+    &:active {
+        border: 1px solid red;
+    }
+
+    &:hove {
+        border: 1px solid red;
+    }
 }
