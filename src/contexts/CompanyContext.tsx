@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import React from 'react';
 
 export interface Companies {
     id: string;
@@ -50,7 +51,7 @@ interface ICompanyContext {
 
 export const CompanyContext = createContext({} as ICompanyContext);
 
-export function CompanyContextProvider({children}){
+export function CompanyContextProvider({children}: {children: React.ReactNode}){
     return (<CompanyContext.Provider value={CompanyContextData()}>
         {children}
     </CompanyContext.Provider>)
