@@ -15,9 +15,13 @@ export function RegisterCompanyModal(){
     const { registerCompany } = useCompanies();
 
     const dataRegisterCompanyValidSchema = zod.object({
-        name: zod.string().min(1, "Preencha todos os campos"),
-		email: zod.string().email("Email precisa ser valido"),
-		cnpj: zod.string().min(8, "Preencha todos os campos"),
+        name: zod.string().min(1, 'Preencha o campo nome'),
+		email: zod.string().email('Email precisa ser valido'),
+		cnpj: zod.string().refine((value)=>{
+            const cnpjPattern = /^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/;
+            return cnpjPattern.test(value);
+        },
+        'deve passar o formato: XX.XXX.XXX/XXXX-XX'),
 	});
 		
 		type IDataRegisterCompanyValidSchema = zod.infer<typeof  dataRegisterCompanyValidSchema>
@@ -42,7 +46,7 @@ export function RegisterCompanyModal(){
     <div className={styles.modal}>
         <header>
             <h1>Cadastrar empresa</h1>
-            <img src={close} alt="" 
+            <img src={close} alt='' 
                 onClick={()=>{
                     closeModalRegister();
                     reset();
@@ -53,7 +57,7 @@ export function RegisterCompanyModal(){
         <div className={styles.inputs}>
             <div className={styles.input}>
                 <label>Nome</label>
-                <input type="text" id="" 
+                <input type='text' id='' 
                     {...register('name')}
                 /> 
                 {
@@ -65,7 +69,7 @@ export function RegisterCompanyModal(){
             </div>
             <div className={styles.input}>
                 <label>CNPJ</label>
-                <input type="text" id="" 
+                <input type='text' id='' 
                     {...register('cnpj')}
                 />
                 {
@@ -77,7 +81,7 @@ export function RegisterCompanyModal(){
             </div>
             <div className={styles.input}>
                 <label>E-mail</label>
-                <input type="text" id="" 
+                <input type='text' id='' 
                     {...register('email')}
                 />
                 {
@@ -90,7 +94,7 @@ export function RegisterCompanyModal(){
         </div>
 
         <div className={styles.footer}>
-            <img src={trash} alt="" />
+            <img src={trash} alt='' />
             <div className={styles.btns}>
                 <button className={styles.btnCancel}
                     onClick={()=>{

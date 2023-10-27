@@ -14,7 +14,11 @@ export function EditAndDeleteCompanyModal(){
     const dataEditCompanyValidSchema = zod.object({
         name: zod.string().min(1, "Preencha todos os campos"),
 		email: zod.string().email("Email precisa ser valido"),
-		cnpj: zod.string().min(8, "Preencha todos os campos"),
+        cnpj: zod.string().refine((value)=>{
+            const cnpjPattern = /^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/;
+            return cnpjPattern.test(value);
+        },
+        'deve passar o formato: XX.XXX.XXX/XXXX-XX')
 	});
 		
     type IDataEditCompanyValidSchema = zod.infer<typeof  dataEditCompanyValidSchema>
