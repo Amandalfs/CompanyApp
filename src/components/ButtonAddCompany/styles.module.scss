@@ -1,0 +1,29 @@
+.buttonAddCompany {
+    width: 80%;
+    height: 56px;
+    border: 1px solid #DDDDDD;
+    border-radius: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    background-image: url('/src/assets/Group\ 300.svg'); 
+    background-repeat: no-repeat;
+    background-position: 1% 50%; 
+
+    p {
+        font-family: Jost;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 14px;
+        letter-spacing: 1.25px;
+        text-align: left;
+        color: #969696;
+    }
+
+    img {
+        position: fixed;
+        left: 10px;
+    }
+}

@@ -1,0 +1,29 @@
+.search {
+    background-image: url('/src/assets/search.svg'); 
+    background-repeat: no-repeat;
+    background-position: 98% 50%; 
+    width: 281px;
+    height: 28px;
+    padding: 0.5rem;
+
+    border: #DDDDDD;
+
+    &:hover {
+        border: #DDDDDD;   
+    }
+
+    &:active {
+        border: #DDDDDD;
+    }
+
+    &::placeholder {
+        text-align: center;
+    }
+}
+
+.content {
+    display: flex;
+    justify-content: end;
+    width: 80%;
+    border: red;
+}
