@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import React from "react";
 
 
 function ModalsContextData(){
@@ -22,7 +23,7 @@ interface IModalsContext {
 
 export const ModalsContext = createContext({} as IModalsContext);
 
-export function ModalsContextProvider({children}){
+export function ModalsContextProvider({children}: {children: React.ReactNode}){
     return (<ModalsContext.Provider value={ModalsContextData()}>
         {children}
     </ModalsContext.Provider>)
